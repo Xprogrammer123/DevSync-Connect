@@ -1,26 +1,35 @@
 import React from 'react';
-import { Navigation } from './Navigation';
-import { HeroContent } from './HeroContent';
-import { HeroImage } from './HeroImage';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Stars } from '@react-three/drei';
+import { motion } from 'framer-motion';
 
-export const HeroSection = () => {
+const HeroSection = () => {
   return (
-    <div className="relative min-h-[99vh] bg-gradient-to-br from-[#4A90E2] to-[#764BA2] overflow-hidden">
-      {/* Background Patterns */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-white blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-white blur-3xl"></div>
-      </div>
-
-      <Navigation />
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[80vh] flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <HeroContent />
-          <HeroImage />
-        </div>
-      </div>
+    <div className="relative h-screen flex items-center justify-center bg-black text-white">
+      <Canvas className="absolute inset-0">
+        <Stars />
+        <OrbitControls />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} />
+      </Canvas>
+      <motion.div
+        className="relative z-10 text-center"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <h1 className="text-6xl font-bold mb-4">Welcome to Our Platform</h1>
+        <p className="text-xl">Explore the future of content management</p>
+        <motion.button
+          className="mt-8 px-6 py-3 bg-blue-600 text-white rounded-lg"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          Get Started
+        </motion.button>
+      </motion.div>
     </div>
   );
 };
+
+export default HeroSection;
